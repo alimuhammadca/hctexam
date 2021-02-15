@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+   <h1>Get All Users</h1>
+   <div id="mytable"></div>
+   <script language="javascript">
+        function generateTable(data) {
+            console.log(data);
+            var output = "<table id='mytable' border=1>";
+            for (var i = 0; i < data.length; i++) {
+                var element = data[i];
+                output += "<tr><td>" + element['id'] + "</td>";
+                output += "<td>" + element['firstname'] + "</td>";
+                output += "<td>" + element['lastname'] + "</td>";
+                output += "<td>" + element['email'] + "</td>";
+                output += "<td>" + element['password'] + "</td></tr>";
+            }
+            output += "</table>";
+            return output;
+        }        
+    </script>
+    <script language="javascript">
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://localhost:8080/HCTExam/webresources/ae.ac.hct.hctexam.appuser";
+        xmlhttp.open('GET',url,true);
+        xmlhttp.setRequestHeader("Accept", "application/json");
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(null);
+        xmlhttp.onreadystatechange = function() {
+
+               if (xmlhttp.readyState == 4) {
+                  if ( xmlhttp.status == 200) {
+                       var obj = JSON.parse(xmlhttp.responseText);
+                       console.log(xmlhttp.responseText);
+                       var table = document.getElementById("mytable");
+                       table.innerHTML = generateTable(obj);
+                 }
+                 else
+                       alert("Error ->" + xmlhttp.responseText);
+              }
+        }
+  </script>
+  </body>
+</html>

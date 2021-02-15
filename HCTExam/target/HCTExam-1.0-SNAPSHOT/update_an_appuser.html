@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+   <h1>Update an AppUser</h1>
+   Id: <input type="text" id="userId" value=""><br/>
+   First Name: <input type="text" id="firstName" value=""><br/>
+   Last Name: <input type="text" id="lastName" value=""><br/>
+   Email: <input type="text" id="email" value=""><br/>
+   Password: <input type="text" id="password" value=""><br/>
+   <input type="button" value="Update" onclick="update()">
+
+    <script language="javascript">
+        function update() {
+            var id = document.getElementById("userId").value;
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var obj = {'id':id, 'firstname':firstName, 'lastname':lastName, 'email':email, 'password':password};
+            var xmlhttp = new XMLHttpRequest();
+            var url = "http://localhost:8080/HCTExam/webresources/ae.ac.hct.hctexam.appuser/"+id;
+            xmlhttp.open('PUT',url,true);
+            xmlhttp.setRequestHeader("Accept", "application/json");
+            xmlhttp.setRequestHeader("Content-Type", "application/json");
+            
+            xmlhttp.send(JSON.stringify(obj));
+            xmlhttp.onreadystatechange = function() {
+                   
+                   if (xmlhttp.readyState == 4) {
+                      if ( xmlhttp.status == 200 || xmlhttp.status == 204) {
+                           alert("Appuser updated successfully");
+                      }
+                      else {
+                          console.log("status: "+xmlhttp.status);
+                          alert(xmlhttp.responseText);
+                      }
+                   }
+            }       
+        }
+  </script>
+  </body>
+</html>

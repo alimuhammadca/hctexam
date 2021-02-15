@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+   <h1>Delete an AppUser</h1>
+   Id: <input type="text" id="userId" value=""><br/>
+   <input type="button" value="Delete" onclick="del()">
+
+    <script language="javascript">
+        function del() {
+            var id = document.getElementById("userId").value;
+            var xmlhttp = new XMLHttpRequest();
+            var url = "http://localhost:8080/HCTExam/webresources/ae.ac.hct.hctexam.appuser/"+id;
+            xmlhttp.open('DELETE',url,true);
+            xmlhttp.setRequestHeader("Accept", "application/json");
+            xmlhttp.setRequestHeader("Content-Type", "application/json");
+            
+            xmlhttp.send(null);
+            xmlhttp.onreadystatechange = function() {
+                   
+                   if (xmlhttp.readyState == 4) {
+                      if ( xmlhttp.status == 200 || xmlhttp.status == 204) {
+                           alert("Appuser deleted successfully");
+                      }
+                      else {
+                          console.log("status: "+xmlhttp.status);
+                          alert(xmlhttp.responseText);
+                      }
+                   }
+            }       
+        }
+  </script>
+  </body>
+</html>
