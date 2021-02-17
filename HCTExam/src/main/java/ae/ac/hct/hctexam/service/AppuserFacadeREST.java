@@ -88,7 +88,18 @@ public class AppuserFacadeREST extends AbstractFacade<Appuser> {
     public boolean verify(@PathParam("token") String token) {
         return MAP.containsValue(token);
     }
-
+  
+    @GET
+    @Path("logout/{id}/{token}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public boolean logout(@PathParam("id") String id, @PathParam("token") String token) {
+        if (MAP.containsValue(token)) {
+            MAP.remove(id);
+            return true;
+        }
+        return false;
+    }
+  
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
