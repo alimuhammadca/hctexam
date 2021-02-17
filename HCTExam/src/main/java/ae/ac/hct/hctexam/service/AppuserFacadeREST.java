@@ -6,7 +6,10 @@
 package ae.ac.hct.hctexam.service;
 
 import ae.ac.hct.hctexam.Appuser;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,6 +31,8 @@ import javax.ws.rs.core.MediaType;
 @Path("ae.ac.hct.hctexam.appuser")
 public class AppuserFacadeREST extends AbstractFacade<Appuser> {
 
+    private static final Map<String, String> MAP = new HashMap(); 
+    
     @PersistenceContext(unitName = "ae.ac.hct_HCTExam_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -60,6 +65,28 @@ public class AppuserFacadeREST extends AbstractFacade<Appuser> {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Appuser find(@PathParam("id") String id) {
         return super.find(id);
+    }
+
+    @GET
+    @Path("authenticate/{id}/{password}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public String authenticate(@PathParam("id") String id, @PathParam("password") String password) {
+        Appuser user = super.find(id);
+        if (user == null) return null;
+        UUID uniqueKey = UUID.randomUUID();
+        if (MAP.get(id)!=null) {
+            MAP.replace(id, uniqueKey.toString());
+        } else {
+            MAP.put(id, uniqueKey.toString());
+        }
+        return uniqueKey.toString();
+    }
+
+    @GET
+    @Path("verify/{token}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public boolean verify(@PathParam("token") String token) {
+        return MAP.containsValue(token);
     }
 
     @GET
