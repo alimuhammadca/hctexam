@@ -6,6 +6,7 @@
 package ae.ac.hct.hctexam.service;
 
 import ae.ac.hct.hctexam.Appuser;
+import ae.ac.hct.model.AuthenticatedUser;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ import javax.ws.rs.core.MediaType;
 public class AppuserFacadeREST extends AbstractFacade<Appuser> {
 
     private static final Map<String, String> MAP = new HashMap(); 
-    
+
     @PersistenceContext(unitName = "ae.ac.hct_HCTExam_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -68,39 +69,6 @@ public class AppuserFacadeREST extends AbstractFacade<Appuser> {
     }
 
     @GET
-    @Path("authenticate/{id}/{password}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public String authenticate(@PathParam("id") String id, @PathParam("password") String password) {
-        Appuser user = super.find(id);
-        if (user == null) return null;
-        UUID uniqueKey = UUID.randomUUID();
-        if (MAP.get(id)!=null) {
-            MAP.replace(id, uniqueKey.toString());
-        } else {
-            MAP.put(id, uniqueKey.toString());
-        }
-        return uniqueKey.toString();
-    }
-
-    @GET
-    @Path("verify/{token}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public boolean verify(@PathParam("token") String token) {
-        return MAP.containsValue(token);
-    }
-  
-    @GET
-    @Path("logout/{id}/{token}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public boolean logout(@PathParam("id") String id, @PathParam("token") String token) {
-        if (MAP.containsValue(token)) {
-            MAP.remove(id);
-            return true;
-        }
-        return false;
-    }
-  
-    @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Appuser> findAll() {
@@ -125,5 +93,40 @@ public class AppuserFacadeREST extends AbstractFacade<Appuser> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
+    @GET
+    @Path("authenticate/{id}/{password}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public AuthenticatedUser authenticate(@PathParam("id") String id, @PathParam("password") String password) {
+        Appuser user = super.find(id);
+        if (user == null) return null;
+        
+        UUID uniqueKey = UUID.randomUUID();
+        if (MAP.get(id)!=null) {
+            MAP.replace(id, uniqueKey.toString());
+        } else {
+            MAP.put(id, uniqueKey.toString());
+        }
+        return new AuthenticatedUser(user.getId(), user.getRoleId(), user.getFirstname(), user.getLastname(),user.getEmail(), uniqueKey.toString());
+    }
+
+    @GET
+    @Path("verify/{token}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public boolean verify(@PathParam("token") String token) {
+        return MAP.containsValue(token);
+    }
+  
+    @GET
+    @Path("logout/{id}/{token}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public boolean logout(@PathParam("id") String id, @PathParam("token") String token) {
+        if (MAP.containsValue(token)) {
+            MAP.remove(id);
+            return true;
+        }
+        return false;
+    }
+  
     
 }

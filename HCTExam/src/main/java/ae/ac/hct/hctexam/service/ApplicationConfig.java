@@ -31,6 +31,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ae.ac.hct.hctexam.service.AppuserFacadeREST.class);
         resources.add(ae.ac.hct.hctexam.service.ExamFacadeREST.class);
+        resources.add(ae.ac.hct.hctexam.service.IncidenceFacadeREST.class);
         resources.add(ae.ac.hct.hctexam.service.IrrFormFacadeREST.class);
         resources.add(ae.ac.hct.hctexam.service.RoleFacadeREST.class);
     }

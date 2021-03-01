@@ -33,6 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Appuser.findByPassword", query = "SELECT a FROM Appuser a WHERE a.password = :password")})
 public class Appuser implements Serializable {
 
+    @Column(name = "role_id")
+    private Integer roleId;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -140,6 +143,14 @@ public class Appuser implements Serializable {
     @Override
     public String toString() {
         return "ae.ac.hct.hctexam.Appuser[ id=" + id + " ]";
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
     
 }
