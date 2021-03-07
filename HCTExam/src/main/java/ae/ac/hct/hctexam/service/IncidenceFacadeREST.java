@@ -42,6 +42,15 @@ public class IncidenceFacadeREST extends AbstractFacade<Incidence> {
         super.create(entity);
     }
 
+    @POST
+    @Path("add")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public int add(Incidence entity) {
+        getEntityManager().persist(entity);
+        getEntityManager().flush();
+        return entity.getId();
+    }    
+        
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -60,6 +69,13 @@ public class IncidenceFacadeREST extends AbstractFacade<Incidence> {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Incidence find(@PathParam("id") Integer id) {
         return super.find(id);
+    }
+
+    @GET
+    @Path("byIrr/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Incidence> findByIrr(@PathParam("id") Integer id) {
+        return getEntityManager().createNamedQuery("Incidence.findByIrrId").setParameter("irrId", id).getResultList();
     }
 
     @GET
