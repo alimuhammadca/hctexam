@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Exam.findByEndTime", query = "SELECT e FROM Exam e WHERE e.endTime = :endTime"),
     @NamedQuery(name = "Exam.findByBuilding", query = "SELECT e FROM Exam e WHERE e.building = :building"),
     @NamedQuery(name = "Exam.findByRoom", query = "SELECT e FROM Exam e WHERE e.room = :room"),
-    @NamedQuery(name = "Exam.findByCampus", query = "SELECT e FROM Exam e WHERE e.campus = :campus")})
+    @NamedQuery(name = "Exam.findByCampus", query = "SELECT e FROM Exam e WHERE e.campus = :campus"),
+    @NamedQuery(name = "Exam.findByPassword1", query = "SELECT e FROM Exam e WHERE e.password1 = :password1"),
+    @NamedQuery(name = "Exam.findByPassword2", query = "SELECT e FROM Exam e WHERE e.password2 = :password2")})
 public class Exam implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -110,6 +112,12 @@ public class Exam implements Serializable {
     @Size(max = 25)
     @Column(name = "campus")
     private String campus;
+    @Size(max = 20)
+    @Column(name = "password1")
+    private String password1;
+    @Size(max = 20)
+    @Column(name = "password2")
+    private String password2;
 
     public Exam() {
     }
@@ -261,6 +269,22 @@ public class Exam implements Serializable {
 
     public void setCampus(String campus) {
         this.campus = campus;
+    }
+
+    public String getPassword1() {
+        return password1;
+    }
+
+    public void setPassword1(String password1) {
+        this.password1 = password1;
+    }
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
     }
 
     @Override

@@ -93,7 +93,7 @@ public class AppuserFacadeREST extends AbstractFacade<Appuser> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
     @GET
     @Path("authenticate/{id}/{password}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -127,6 +127,5 @@ public class AppuserFacadeREST extends AbstractFacade<Appuser> {
         }
         return false;
     }
-  
     
 }

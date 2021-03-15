@@ -35,7 +35,9 @@ start_time varchar(25) null,
 end_time varchar(25) null,
 building varchar(25) null,
 room varchar(25) null,
-campus varchar(25) null
+campus varchar(25) null,
+password1 varchar(20) null,
+password2 varchar(20) null
 );
 
 create table irr_form (
@@ -54,7 +56,7 @@ inv_3 varchar(25) null
 
 create table incidence (
 id int auto_increment primary key,
-irr_id int references irr_form(id),
+exam_id int references exam(id),
 student_name varchar(50) not null,
 student_id varchar(15) not null,
 incidence_time varchar(25) not null,

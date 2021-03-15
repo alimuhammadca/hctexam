@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Incidence.findAll", query = "SELECT i FROM Incidence i"),
     @NamedQuery(name = "Incidence.findById", query = "SELECT i FROM Incidence i WHERE i.id = :id"),
-    @NamedQuery(name = "Incidence.findByIrrId", query = "SELECT i FROM Incidence i WHERE i.irrId = :irrId"),
+    @NamedQuery(name = "Incidence.findByExamId", query = "SELECT i FROM Incidence i WHERE i.examId = :examId"),
     @NamedQuery(name = "Incidence.findByStudentName", query = "SELECT i FROM Incidence i WHERE i.studentName = :studentName"),
     @NamedQuery(name = "Incidence.findByStudentId", query = "SELECT i FROM Incidence i WHERE i.studentId = :studentId"),
     @NamedQuery(name = "Incidence.findByIncidenceTime", query = "SELECT i FROM Incidence i WHERE i.incidenceTime = :incidenceTime"),
@@ -44,10 +44,8 @@ public class Incidence implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "irr_id")
-    private int irrId;
+    @Column(name = "exam_id")
+    private Integer examId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -81,9 +79,8 @@ public class Incidence implements Serializable {
         this.id = id;
     }
 
-    public Incidence(Integer id, int irrId, String studentName, String studentId, String incidenceTime, int deskNumber) {
+    public Incidence(Integer id, String studentName, String studentId, String incidenceTime, int deskNumber) {
         this.id = id;
-        this.irrId = irrId;
         this.studentName = studentName;
         this.studentId = studentId;
         this.incidenceTime = incidenceTime;
@@ -98,12 +95,12 @@ public class Incidence implements Serializable {
         this.id = id;
     }
 
-    public int getIrrId() {
-        return irrId;
+    public Integer getExamId() {
+        return examId;
     }
 
-    public void setIrrId(int irrId) {
-        this.irrId = irrId;
+    public void setExamId(Integer examId) {
+        this.examId = examId;
     }
 
     public String getStudentName() {

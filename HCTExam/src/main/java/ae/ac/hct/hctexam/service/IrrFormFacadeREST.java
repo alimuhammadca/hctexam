@@ -41,16 +41,7 @@ public class IrrFormFacadeREST extends AbstractFacade<IrrForm> {
     public void create(IrrForm entity) {
         super.create(entity);
     }
-    
-    @POST
-    @Path("add")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public int add(IrrForm entity) {
-        getEntityManager().persist(entity);
-        getEntityManager().flush();
-        return entity.getId();
-    }    
-    
+
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

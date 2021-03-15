@@ -27,14 +27,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Appuser.findAll", query = "SELECT a FROM Appuser a"),
     @NamedQuery(name = "Appuser.findById", query = "SELECT a FROM Appuser a WHERE a.id = :id"),
+    @NamedQuery(name = "Appuser.findByRoleId", query = "SELECT a FROM Appuser a WHERE a.roleId = :roleId"),
     @NamedQuery(name = "Appuser.findByFirstname", query = "SELECT a FROM Appuser a WHERE a.firstname = :firstname"),
     @NamedQuery(name = "Appuser.findByLastname", query = "SELECT a FROM Appuser a WHERE a.lastname = :lastname"),
     @NamedQuery(name = "Appuser.findByEmail", query = "SELECT a FROM Appuser a WHERE a.email = :email"),
     @NamedQuery(name = "Appuser.findByPassword", query = "SELECT a FROM Appuser a WHERE a.password = :password")})
 public class Appuser implements Serializable {
-
-    @Column(name = "role_id")
-    private Integer roleId;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,6 +41,8 @@ public class Appuser implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "id")
     private String id;
+    @Column(name = "role_id")
+    private Integer roleId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
@@ -86,6 +86,14 @@ public class Appuser implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public String getFirstname() {
@@ -143,14 +151,6 @@ public class Appuser implements Serializable {
     @Override
     public String toString() {
         return "ae.ac.hct.hctexam.Appuser[ id=" + id + " ]";
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
     }
     
 }
