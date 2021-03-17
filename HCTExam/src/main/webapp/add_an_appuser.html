@@ -6,6 +6,7 @@
   <body>
    <h1>Add AppUser</h1>
    Id: <input type="text" id="userId" value=""><br/>
+   Role Id: <input type="text" id="roleId" value=""><br/>
    First Name: <input type="text" id="firstName" value=""><br/>
    Last Name: <input type="text" id="lastName" value=""><br/>
    Email: <input type="text" id="email" value=""><br/>
@@ -15,11 +16,12 @@
     <script language="javascript">
         function add() {
             var id = document.getElementById("userId").value;
+            var roleId = document.getElementById("roleId").value;
             var firstName = document.getElementById("firstName").value;
             var lastName = document.getElementById("lastName").value;
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
-            var obj = {'id':id, 'firstname':firstName, 'lastname':lastName, 'email':email, 'password':password};
+            var obj = {'id':id, 'firstname':firstName, 'lastname':lastName, 'email':email, 'password':password, 'roleId':roleId};
             var xmlhttp = new XMLHttpRequest();
             var url = "http://localhost:8080/HCTExam/webresources/ae.ac.hct.hctexam.appuser";
             xmlhttp.open('POST',url,true);

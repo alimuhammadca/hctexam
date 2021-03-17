@@ -28,7 +28,7 @@ public static void main(String[] args) throws IOException {
     FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
     final FormDataMultiPart multipart = (FormDataMultiPart) formDataMultiPart.field("foo", "bar").bodyPart(filePart);
       
-    final WebTarget target = client.target("http://localhost:8080/HCTExam/rest/upload/excel");
+    final WebTarget target = client.target("http://localhost:8080/HCTExam/webresources/upload/excel");
     final Response response = target.request().post(Entity.entity(multipart, multipart.getMediaType()));
      
     //Use response object to verify upload success
