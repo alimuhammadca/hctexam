@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Exam.findByCourseCode", query = "SELECT e FROM Exam e WHERE e.courseCode = :courseCode"),
     @NamedQuery(name = "Exam.findByDelivery", query = "SELECT e FROM Exam e WHERE e.delivery = :delivery"),
     @NamedQuery(name = "Exam.findByStudentCount", query = "SELECT e FROM Exam e WHERE e.studentCount = :studentCount"),
+    @NamedQuery(name = "Exam.findByExamDate", query = "SELECT e FROM Exam e WHERE e.examDate = :examDate"),
     @NamedQuery(name = "Exam.findByRegTime", query = "SELECT e FROM Exam e WHERE e.regTime = :regTime"),
     @NamedQuery(name = "Exam.findByStartTime", query = "SELECT e FROM Exam e WHERE e.startTime = :startTime"),
     @NamedQuery(name = "Exam.findByEndTime", query = "SELECT e FROM Exam e WHERE e.endTime = :endTime"),
@@ -94,6 +95,9 @@ public class Exam implements Serializable {
     @NotNull
     @Column(name = "student_count")
     private int studentCount;
+    @Size(max = 25)
+    @Column(name = "exam_date")
+    private String examDate;
     @Size(max = 25)
     @Column(name = "reg_time")
     private String regTime;
@@ -221,6 +225,14 @@ public class Exam implements Serializable {
 
     public void setStudentCount(int studentCount) {
         this.studentCount = studentCount;
+    }
+
+    public String getExamDate() {
+        return examDate;
+    }
+
+    public void setExamDate(String examDate) {
+        this.examDate = examDate;
     }
 
     public String getRegTime() {

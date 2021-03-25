@@ -8,6 +8,9 @@ package ae.ac.hct.hctexam.util;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -46,7 +49,13 @@ public class Upload {
             InitialContext context = new InitialContext();
             DataSource dataSource = (DataSource) context.lookup("jdbc/hctdb");
             Connection conn = dataSource.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO exam (semester, head_inv, course_code, delivery, student_count, password1, password2) VALUES (?,?,?,?,?,?,?)");
+            List<String> userList = new ArrayList();
+            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM appuser");
+            while (rs.next()) {
+                userList.add(rs.getString("id"));
+            }
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO exam (semester, head_inv, course_code, delivery, student_count, password1, password2, exam_date, start_time) VALUES (?,?,?,?,?,?,?,?,?)");
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO appuser (id, role_id, password) VALUES (?,?,?)");
             Scanner io = new Scanner(new FileInputStream("d:/temp/exam.csv"));
             String lineText;
             while (io.hasNextLine()) {
@@ -54,20 +63,31 @@ public class Upload {
                 System.out.println(lineText);
                 String[] data = lineText.split(",");
                 String semester = data[0];
-                String headInvigilator = data[1];
-                String courseCode = data[2];
-                String mode = data[3];
-                int numOfStudents = Integer.parseInt(data[4]);
-                String password1 = data[5];
-                String password2 = data[6];
+                String headInvigilatorId = data[1];
+                String headInvigilatorName = data[2];
+                String courseCode = data[3];
+                String mode = data[4];
+                int numOfStudents = Integer.parseInt(data[5]);
+                String password1 = data[6];
+                String password2 = data[7];
+                String examDate = data[8];
+                String examTime = data[9];
                 stmt.setString(1, semester);
-                stmt.setString(2, headInvigilator);
+                stmt.setString(2, headInvigilatorId);
                 stmt.setString(3, courseCode);
                 stmt.setString(4, mode);
                 stmt.setInt(5, numOfStudents);
                 stmt.setString(6, password1);
                 stmt.setString(7, password2);
+                stmt.setString(8, examDate);
+                stmt.setString(9, examTime);
                 stmt.executeUpdate();
+                if (!userList.contains(headInvigilatorId)) {
+                    stmt2.setString(1, headInvigilatorId);
+                    stmt2.setInt(2, 2);
+                    stmt2.setString(3, "changeme!");
+                    stmt2.executeUpdate();
+                }
             }
             conn.close();
         } catch (Exception e) {

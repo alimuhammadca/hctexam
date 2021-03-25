@@ -61,6 +61,15 @@ public class AppuserFacadeREST extends AbstractFacade<Appuser> {
         super.remove(super.find(id));
     }
 
+    @DELETE
+    public void remove() {
+        List<Appuser> list = super.findAll();
+        for (Appuser user : list) {
+            if (user.getRoleId()==2)
+                super.remove(user);
+        }
+    }
+
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
