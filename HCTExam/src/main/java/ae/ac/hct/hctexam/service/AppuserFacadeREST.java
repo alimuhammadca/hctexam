@@ -110,6 +110,10 @@ public class AppuserFacadeREST extends AbstractFacade<Appuser> {
         Appuser user = super.find(id);
         if (user == null) return null;
         
+        if (!password.equals(user.getPassword())) {
+            return null;
+        }
+        
         UUID uniqueKey = UUID.randomUUID();
         if (MAP.get(id)!=null) {
             MAP.replace(id, uniqueKey.toString());
