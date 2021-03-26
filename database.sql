@@ -1,7 +1,3 @@
-create database hctdb;
-
-use hctdb;
-
 create table role (
 id int primary key,
 name varchar(25) not null
@@ -12,9 +8,9 @@ INSERT INTO role VALUES(1, 'ADMIN'), (2, 'USER');
 create table appuser (
 id varchar(25) primary key,
 role_id int REFERENCES role(id), 
-firstname varchar(25) not null,
-lastname varchar(25) not null,
-email varchar(25) not null,
+firstname varchar(25) null,
+lastname varchar(25) null,
+email varchar(25) null,
 password varchar(25) not null
 );
 
@@ -30,6 +26,7 @@ floater varchar(25) null,
 course_code varchar(25) not null,
 delivery varchar(25) not null,
 student_count int not null,
+exam_date varchar(25) null,
 reg_time varchar(25) null,
 start_time varchar(25) null,
 end_time varchar(25) null,
