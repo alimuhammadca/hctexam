@@ -61,3 +61,8 @@ desk_number int not null,
 observation varchar(255) null,
 evidence varchar(255) null
 );
+
+create table course (
+course_code varchar(10) primary key,
+course_name varchar(30) not null
+)
