@@ -32,8 +32,8 @@ public class Upload {
     public boolean uploaExcelFile(@FormDataParam("file") InputStream fileInputStream,
             @FormDataParam("file") FormDataContentDisposition fileMetaData) {
         try {
-            //String UPLOAD_PATH = "/Users/sufianbinidris/NetBeansProjects/tempdir/";
-            String UPLOAD_PATH = "d:/temp/";
+            String UPLOAD_PATH = "/Users/sufianbinidris/NetBeansProjects/tempdir/";
+            //String UPLOAD_PATH = "d:/temp/";
             StringBuffer buff = new StringBuffer();
             int read = 0;
             byte[] bytes = new byte[1024];
