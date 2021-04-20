@@ -64,5 +64,5 @@ evidence varchar(255) null
 
 create table course (
 course_code varchar(10) primary key,
-course_name varchar(30) not null
+course_name varchar(50) not null
 )

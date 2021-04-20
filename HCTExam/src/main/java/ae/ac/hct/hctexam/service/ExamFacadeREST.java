@@ -72,6 +72,18 @@ public class ExamFacadeREST extends AbstractFacade<Exam> {
     }
 
     @GET
+    @Path("headinv/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Exam findByHeadInvId(@PathParam("id") String id) {
+        List<Exam> results = (List<Exam>)getEntityManager().createNamedQuery("Exam.findByHeadInv").setParameter("headInv", id).getResultList();
+        if (results.size()>0) {
+            return results.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Exam> findAll() {
