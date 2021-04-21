@@ -8,6 +8,7 @@
     <class>ae.ac.hct.hctexam.Appuser</class>
     <class>ae.ac.hct.hctexam.Exam</class>
     <class>ae.ac.hct.hctexam.Incidence</class>
+    <class>ae.ac.hct.hctexam.Course</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <!--properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hctdb"/>

@@ -5,7 +5,7 @@
  */
 package ae.ac.hct.hctexam.service;
 
-import ae.ac.hct.hctexam.Exam;
+import ae.ac.hct.hctexam.Course;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,72 +25,48 @@ import javax.ws.rs.core.MediaType;
  * @author amuhammad1
  */
 @Stateless
-@Path("ae.ac.hct.hctexam.exam")
-public class ExamFacadeREST extends AbstractFacade<Exam> {
+@Path("ae.ac.hct.hctexam.course")
+public class CourseFacadeREST extends AbstractFacade<Course> {
 
     @PersistenceContext(unitName = "ae.ac.hct_HCTExam_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
-    public ExamFacadeREST() {
-        super(Exam.class);
+    public CourseFacadeREST() {
+        super(Course.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Exam entity) {
+    public void create(Course entity) {
         super.create(entity);
     }
 
-    @POST
-    @Path("add")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public int add(Exam entity) {
-        getEntityManager().persist(entity);
-        getEntityManager().flush();
-        return entity.getId();
-    }    
-    
     @PUT
-    @Path("{id}")
+    @Path("{courseCode}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Exam entity) {
+    public void edit(@PathParam("id") String courseCode, Course entity) {
         super.edit(entity);
     }
 
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    @Path("{courseCode}")
+    public void remove(@PathParam("courseCode") String courseCode) {
+        super.remove(super.find(courseCode));
     }
 
     @GET
-    @Path("{id}")
+    @Path("{courseCode}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Exam find(@PathParam("id") Integer id) {
-        return super.find(id);
-    }
-
-    @GET
-    @Path("headinv/{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Exam> findByHeadInvId(@PathParam("id") String id) {
-        List<Exam> results = (List<Exam>)getEntityManager().createNamedQuery("Exam.findByHeadInv").setParameter("headInv", id).getResultList();
-        return results;
+    public Course find(@PathParam("courseCode") String courseCode) {
+        return super.find(courseCode);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Exam> findAll() {
+    public List<Course> findAll() {
         return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Exam> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
     }
 
     @GET
