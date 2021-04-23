@@ -66,3 +66,6 @@ create table course (
 course_code varchar(10) primary key,
 course_name varchar(50) not null
 )
+
+ALTER TABLE exam
+ADD FOREIGN KEY (course_code) REFERENCES course(course_code);

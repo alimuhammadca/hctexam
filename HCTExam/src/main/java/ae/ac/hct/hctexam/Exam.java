@@ -7,13 +7,18 @@ package ae.ac.hct.hctexam;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,7 +41,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Exam.findByInv3", query = "SELECT e FROM Exam e WHERE e.inv3 = :inv3"),
     @NamedQuery(name = "Exam.findByBkupInv", query = "SELECT e FROM Exam e WHERE e.bkupInv = :bkupInv"),
     @NamedQuery(name = "Exam.findByFloater", query = "SELECT e FROM Exam e WHERE e.floater = :floater"),
-    @NamedQuery(name = "Exam.findByCourseCode", query = "SELECT e FROM Exam e WHERE e.courseCode = :courseCode"),
+//    @NamedQuery(name = "Exam.findByCourseCode", query = "SELECT e FROM Exam e WHERE e.courseCode = :courseCode"),
+//    @NamedQuery(name = "Exam.findByCourseCode", query = "SELECT e FROM Exam e WHERE e.course.courseCode = :courseCode"),
     @NamedQuery(name = "Exam.findByDelivery", query = "SELECT e FROM Exam e WHERE e.delivery = :delivery"),
     @NamedQuery(name = "Exam.findByStudentCount", query = "SELECT e FROM Exam e WHERE e.studentCount = :studentCount"),
     @NamedQuery(name = "Exam.findByExamDate", query = "SELECT e FROM Exam e WHERE e.examDate = :examDate"),
@@ -81,11 +87,11 @@ public class Exam implements Serializable {
     @Size(max = 25)
     @Column(name = "floater")
     private String floater;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
-    @Column(name = "course_code")
-    private String courseCode;
+    
+    @OneToOne
+    @JoinColumn(name = "course_code")
+    private Course course;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
@@ -129,7 +135,7 @@ public class Exam implements Serializable {
     public Exam(Integer id) {
         this.id = id;
     }
-
+/*
     public Exam(Integer id, String semester, String headInv, String courseCode, String delivery, int studentCount) {
         this.id = id;
         this.semester = semester;
@@ -138,7 +144,16 @@ public class Exam implements Serializable {
         this.delivery = delivery;
         this.studentCount = studentCount;
     }
-
+*/
+    public Exam(Integer id, String semester, String headInv, Course course, String delivery, int studentCount) {
+        this.id = id;
+        this.semester = semester;
+        this.headInv = headInv;
+        this.course = course;
+        this.delivery = delivery;
+        this.studentCount = studentCount;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -202,13 +217,21 @@ public class Exam implements Serializable {
     public void setFloater(String floater) {
         this.floater = floater;
     }
-
+/*
     public String getCourseCode() {
         return courseCode;
     }
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
+    }
+*/
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public String getDelivery() {

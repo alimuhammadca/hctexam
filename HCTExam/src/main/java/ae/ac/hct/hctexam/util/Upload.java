@@ -37,8 +37,8 @@ public class Upload {
             StringBuffer buff = new StringBuffer();
             int read = 0;
             byte[] bytes = new byte[1024];
-
-            OutputStream out = new FileOutputStream(new File(UPLOAD_PATH + fileMetaData.getFileName()));
+            String inputFileName = UPLOAD_PATH + fileMetaData.getFileName();
+            OutputStream out = new FileOutputStream(new File(inputFileName));
             while ((read = fileInputStream.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
                 buff.append(bytes);
@@ -63,7 +63,9 @@ public class Upload {
             PreparedStatement courseFindStmt = conn.prepareStatement("SELECT * FROM course WHERE course_code=?");
             PreparedStatement courseInsertStmt = conn.prepareStatement("INSERT INTO course VALUES (?, ?)");
                 //********** sufian
-            Scanner io = new Scanner(new FileInputStream(UPLOAD_PATH+"exam.csv"));
+            Scanner io = new Scanner(new FileInputStream(inputFileName));
+            
+            if (io.hasNextLine()) io.nextLine();
             
             String lineText;
             while (io.hasNextLine()) {
@@ -72,16 +74,18 @@ public class Upload {
                 String[] data = lineText.split(",");
                 System.out.println("1");
                 String semester = data[0];
-                String headInvigilatorId = data[1];
-                String headInvigilatorName = data[2];
-                String courseCode = data[3];
-                String courseName = data[4];
-                String mode = data[5];
-                int numOfStudents = Integer.parseInt(data[6]);
-                String password1 = data[7];
-                String password2 = data[8];
-                String examDate = data[9];
-                String examTime = data[10];
+                String[] course = data[2].split(":");
+                String courseCode = course[0].trim();
+                String courseName = course[1].trim();
+                int numOfStudents = Integer.parseInt(data[3]);
+                String examDate = data[4];
+                String examTime = data[5];
+                String mode = data[8];
+                String password1 = data[9];
+                String password2 = data[10];
+                String headInvigilatorName = data[11];
+                String headInvigilatorId = data[12].split("@")[0];
+                
                 System.out.println("2");
                 examStmt.setString(1, semester);
                 examStmt.setString(2, headInvigilatorId);
