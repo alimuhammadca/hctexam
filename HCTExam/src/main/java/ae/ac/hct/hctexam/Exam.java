@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Exam.findAll", query = "SELECT e FROM Exam e"),
     @NamedQuery(name = "Exam.findById", query = "SELECT e FROM Exam e WHERE e.id = :id"),
     @NamedQuery(name = "Exam.findBySemester", query = "SELECT e FROM Exam e WHERE e.semester = :semester"),
-    @NamedQuery(name = "Exam.findByHeadInv", query = "SELECT e FROM Exam e WHERE e.headInv = :headInv"),
+    @NamedQuery(name = "Exam.findByHeadInv", query = "SELECT e FROM Exam e, Appuser a WHERE e.headInv = :headInv"),
     @NamedQuery(name = "Exam.findByInv1", query = "SELECT e FROM Exam e WHERE e.inv1 = :inv1"),
     @NamedQuery(name = "Exam.findByInv2", query = "SELECT e FROM Exam e WHERE e.inv2 = :inv2"),
     @NamedQuery(name = "Exam.findByInv3", query = "SELECT e FROM Exam e WHERE e.inv3 = :inv3"),
@@ -128,6 +128,9 @@ public class Exam implements Serializable {
     @Size(max = 20)
     @Column(name = "password2")
     private String password2;
+    @Size(max = 30)
+    @Column(name = "head_inv_name")
+    private String headInvName;
 
     public Exam() {
     }
@@ -135,16 +138,6 @@ public class Exam implements Serializable {
     public Exam(Integer id) {
         this.id = id;
     }
-/*
-    public Exam(Integer id, String semester, String headInv, String courseCode, String delivery, int studentCount) {
-        this.id = id;
-        this.semester = semester;
-        this.headInv = headInv;
-        this.courseCode = courseCode;
-        this.delivery = delivery;
-        this.studentCount = studentCount;
-    }
-*/
     public Exam(Integer id, String semester, String headInv, Course course, String delivery, int studentCount) {
         this.id = id;
         this.semester = semester;
@@ -217,15 +210,6 @@ public class Exam implements Serializable {
     public void setFloater(String floater) {
         this.floater = floater;
     }
-/*
-    public String getCourseCode() {
-        return courseCode;
-    }
-
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
-    }
-*/
     public Course getCourse() {
         return course;
     }
@@ -320,6 +304,14 @@ public class Exam implements Serializable {
 
     public void setPassword2(String password2) {
         this.password2 = password2;
+    }
+
+    public String getHeadInvName() {
+        return headInvName;
+    }
+
+    public void setHeadInvName(String headInvName) {
+        this.headInvName = headInvName;
     }
 
     @Override

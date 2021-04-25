@@ -1,4 +1,5 @@
 ae\ac\hct\hctexam\service\RoleFacadeREST.class
+ae\ac\hct\hctexam\Course.class
 ae\ac\hct\hctexam\util\Upload.class
 ae\ac\hct\hctexam\service\IncidenceFacadeREST.class
 ae\ac\hct\hctexam\Appuser_.class
@@ -6,6 +7,7 @@ ae\ac\hct\hctexam\Incidence.class
 ae\ac\hct\hctexam\service\ExamFacadeREST.class
 ae\ac\hct\hctexam\Exam.class
 ae\ac\hct\hctexam\Exam_.class
+ae\ac\hct\hctexam\Course_.class
 ae\ac\hct\hctexam\IrrForm_.class
 ae\ac\hct\hctexam\Role.class
 ae\ac\hct\hctexam\service\AppuserFacadeREST.class

@@ -9,6 +9,8 @@ import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -31,6 +33,9 @@ public class Upload {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     public boolean uploaExcelFile(@FormDataParam("file") InputStream fileInputStream,
             @FormDataParam("file") FormDataContentDisposition fileMetaData) {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("YYYY-MM-dd");
+        
         try {
             String UPLOAD_PATH = "/Users/sufianbinidris/NetBeansProjects/tempdir/";
             //String UPLOAD_PATH = "d:/temp/";
@@ -57,7 +62,7 @@ public class Upload {
             }
             */
             
-            PreparedStatement examStmt = conn.prepareStatement("INSERT INTO exam (semester, head_inv, course_code, delivery, student_count, password1, password2, exam_date, start_time) VALUES (?,?,?,?,?,?,?,?,?)");
+            PreparedStatement examStmt = conn.prepareStatement("INSERT INTO exam (semester, head_inv, course_code, delivery, student_count, password1, password2, exam_date, start_time, head_inv_name) VALUES (?,?,?,?,?,?,?,?,?,?)");
             PreparedStatement appuserStmt = conn.prepareStatement("INSERT INTO appuser (id, role_id, firstname, password) VALUES (?,?,?,?)");
             PreparedStatement headInvStmt = conn.prepareStatement("SELECT * FROM appuser WHERE id=?");
             PreparedStatement courseFindStmt = conn.prepareStatement("SELECT * FROM course WHERE course_code=?");
@@ -79,6 +84,8 @@ public class Upload {
                 String courseName = course[1].trim();
                 int numOfStudents = Integer.parseInt(data[3]);
                 String examDate = data[4];
+                Date dt = sdf1.parse(examDate);
+                examDate = sdf2.format(dt);
                 String examTime = data[5];
                 String mode = data[8];
                 String password1 = data[9];
@@ -96,6 +103,7 @@ public class Upload {
                 examStmt.setString(7, password2);
                 examStmt.setString(8, examDate);
                 examStmt.setString(9, examTime);
+                examStmt.setString(10, headInvigilatorName);
                 System.out.println("3");
                 System.out.println("Returns: "+examStmt.executeUpdate());
                 System.out.println("Inserted into exam");
@@ -131,5 +139,11 @@ public class Upload {
         }
         return true;
     }
-
+    public static void main(String[] args) throws Exception {
+        String in = "15-Dec-20";
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
+        Date dt = sdf1.parse(in);
+        String out = new SimpleDateFormat("YYYY-MM-dd").format(dt);
+        System.out.println(out);
+    }
 }

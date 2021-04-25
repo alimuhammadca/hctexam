@@ -34,7 +34,8 @@ building varchar(25) null,
 room varchar(25) null,
 campus varchar(25) null,
 password1 varchar(20) null,
-password2 varchar(20) null
+password2 varchar(20) null,
+head_inv_name varchar(3) null
 );
 
 create table irr_form (
